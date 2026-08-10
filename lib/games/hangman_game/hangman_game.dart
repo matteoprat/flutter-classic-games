@@ -116,7 +116,7 @@ class _HangmanState extends State<HangmanGame> {
       startGame: _startGame,
       body: SafeArea(
         child: Column(
-          children: [
+          children: <Widget>[
             HangmanControlPanel(
               currentCategory: _currentCategory,
               switchCategory: _switchCategory,

@@ -1,5 +1,6 @@
 import 'package:classic_games/games/fifteen_game/fifteen_game.dart';
 import 'package:classic_games/games/hangman_game/hangman_game.dart';
+import 'package:classic_games/games/hanoi_tower_game/hanoi_tower_game.dart';
 import 'package:classic_games/games/mastermind_game/mastermind_game.dart';
 import 'package:classic_games/games/memory_game/memory_game.dart';
 import 'package:classic_games/games/minesweeper_game/minesweeper_game.dart';
@@ -63,6 +64,22 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const HangmanGame()),
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+            GameCard(
+              title: "Hanoi Tower",
+              subtitle: "Move discs from column A to column C",
+              icon: Icons.cabin_rounded,
+              color: Colors.lightBlue,
+              isAvailable: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HanoiTowerGame(),
+                  ),
                 );
               },
             ),

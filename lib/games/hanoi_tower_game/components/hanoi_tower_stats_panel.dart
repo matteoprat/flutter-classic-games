@@ -1,25 +1,15 @@
 import 'package:classic_games/templates/state_item.dart';
 import 'package:flutter/material.dart';
 
-class MinesweeperStatsPanel extends StatelessWidget {
-  final int remainingMines;
-  final int revealedCells;
-  final int totalSafeCells;
-  final int elapsedSeconds;
+class HanoiTowerStatsPanel extends StatelessWidget {
+  final int totalMoves;
+  final int perfectScore;
 
-  const MinesweeperStatsPanel({
+  const HanoiTowerStatsPanel({
     super.key,
-    required this.remainingMines,
-    required this.revealedCells,
-    required this.totalSafeCells,
-    required this.elapsedSeconds,
+    required this.totalMoves,
+    required this.perfectScore,
   });
-
-  String _formaTime(int seconds) {
-    int mins = seconds ~/ 60;
-    int secs = seconds % 60;
-    return "${mins.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +31,14 @@ class MinesweeperStatsPanel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           StateItem(
-            icon: Icons.flag_rounded,
-            iconColor: Colors.redAccent,
-            label: "$remainingMines",
-          ),
-          StateItem(
-            icon: Icons.grid_on_rounded,
+            icon: Icons.swap_horiz_rounded,
             iconColor: Colors.blueAccent,
-            label: "$revealedCells / $totalSafeCells",
+            label: "Swaps: $totalMoves",
           ),
           StateItem(
-            icon: Icons.timer_rounded,
-            iconColor: Colors.orangeAccent,
-            label: _formaTime(elapsedSeconds),
+            icon: Icons.star_outline_rounded,
+            iconColor: Colors.amberAccent,
+            label: "Perfect swaps:$perfectScore",
           ),
         ],
       ),
