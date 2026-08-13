@@ -38,7 +38,7 @@ class HanoiTowerStatsPanel extends StatelessWidget {
           StateItem(
             icon: Icons.star_outline_rounded,
             iconColor: Colors.amberAccent,
-            label: "Perfect swaps:$perfectScore",
+            label: "Perfect swaps: $perfectScore",
           ),
         ],
       ),

@@ -1,8 +1,8 @@
+import 'package:classic_games/data/game_result/tris_game_result.dart';
 import 'package:classic_games/data/tris_actor.dart';
-import 'package:classic_games/data/game_result.dart';
+import 'package:classic_games/data/game_result/game_result.dart';
 import 'package:classic_games/data/tris_triples.dart';
 import 'package:classic_games/games/tris_game/components/tris_game_tile.dart';
-import 'package:classic_games/templates/endgame_dialog.dart';
 import 'package:classic_games/templates/game_container.dart';
 import 'package:classic_games/utils/dialog_utils.dart';
 import 'package:classic_games/utils/tris_utils.dart';
@@ -63,7 +63,7 @@ class _TrisGameState extends State<TrisGame> {
         _winningTriple = winningTriple;
       });
       _showEndGameDialog(
-        actor == TrisActor.human ? GameResult.win : GameResult.lose,
+        actor == TrisActor.human ? TrisGameResult.win : TrisGameResult.lose,
       );
       return;
     }
@@ -72,7 +72,7 @@ class _TrisGameState extends State<TrisGame> {
       setState(() {
         _isGameOver = true;
       });
-      _showEndGameDialog(GameResult.even);
+      _showEndGameDialog(TrisGameResult.even);
       return;
     }
 
@@ -99,51 +99,8 @@ class _TrisGameState extends State<TrisGame> {
     _startGame();
   }
 
-  EndGameDialog _getWinDialog() {
-    return EndGameDialog(
-      title: "Congratulations!",
-      message: "You managed to win the game against CPU.",
-      icon: Icons.emoji_events_rounded,
-      iconColor: Colors.amber,
-      newGameAction: _newGameAction,
-    );
-  }
-
-  EndGameDialog _getLoseDialog() {
-    return EndGameDialog(
-      title: "You lose.",
-      message: "The CPU managed to win the game.",
-      icon: Icons.sentiment_dissatisfied_rounded,
-      iconColor: Colors.blueGrey,
-      newGameAction: _newGameAction,
-    );
-  }
-
-  EndGameDialog _getEvenDialog() {
-    return EndGameDialog(
-      title: "Game is even.",
-      message:
-          "You didn't win but you managed to prevent the cpu from winning.",
-      icon: Icons.handshake_rounded,
-      iconColor: Colors.blueGrey,
-      newGameAction: _newGameAction,
-    );
-  }
-
-  void _showEndGameDialog(GameResult result) {
-    EndGameDialog? dialog;
-    switch (result) {
-      case GameResult.win:
-        dialog = _getWinDialog();
-        break;
-      case GameResult.lose:
-        dialog = _getLoseDialog();
-        break;
-      case GameResult.even:
-        dialog = _getEvenDialog();
-        break;
-    }
-    dialogUtils.showEndGameDialog(context, dialog);
+  void _showEndGameDialog(GameResult gameResult) {
+    dialogUtils.showEndGameDialog(context, gameResult, null, _newGameAction);
   }
 
   GridView _getGrid() {

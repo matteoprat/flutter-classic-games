@@ -1,11 +1,10 @@
-import 'package:classic_games/data/game_result.dart';
+import 'package:classic_games/data/game_result/hangman_game_result.dart';
 import 'package:classic_games/data/hangman_category.dart';
 import 'package:classic_games/data/hangman_word_repository.dart';
 import 'package:classic_games/games/hangman_game/components/hangman_control_panel.dart';
 import 'package:classic_games/games/hangman_game/components/hangman_keyboard_letter.dart';
 import 'package:classic_games/games/hangman_game/components/hangman_painter_widget.dart';
 import 'package:classic_games/games/hangman_game/components/hangman_word_letter.dart';
-import 'package:classic_games/templates/endgame_dialog.dart';
 import 'package:classic_games/templates/game_container.dart';
 import 'package:classic_games/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +64,7 @@ class _HangmanState extends State<HangmanGame> {
       });
 
       if (_matches.containsAll(_wordSet)) {
-        _showDialog(GameResult.win);
+        _showDialog(HangmanGameResult.win);
       }
     } else {
       Set<String> newErrors = {..._errors};
@@ -77,7 +76,7 @@ class _HangmanState extends State<HangmanGame> {
       });
 
       if (_remainingAttempts < 1) {
-        _showDialog(GameResult.lose);
+        _showDialog(HangmanGameResult.lose);
       }
     }
   }
@@ -94,19 +93,11 @@ class _HangmanState extends State<HangmanGame> {
     _startGame();
   }
 
-  void _showDialog(GameResult gameResult) {
-    EndGameDialog dialog = EndGameDialog(
-      title: gameResult == GameResult.win ? "Congratulations!" : "You lose.",
-      message: gameResult == GameResult.win
-          ? "You found the word ${_word.join('')} with $_remainingAttempts attempts remaining"
-          : "You didn't find the word: ${_word.join('')}.",
-      icon: gameResult == GameResult.win
-          ? Icons.emoji_events_rounded
-          : Icons.sentiment_dissatisfied_rounded,
-      iconColor: gameResult == GameResult.win ? Colors.amber : Colors.blueGrey,
-      newGameAction: _newGameAction,
-    );
-    dialogUtils.showEndGameDialog(context, dialog);
+  void _showDialog(HangmanGameResult gameResult) {
+    dialogUtils.showEndGameDialog(context, gameResult, <String, String>{
+      "#word#": _word.join().toUpperCase(),
+      "#remainingAttempts#": _remainingAttempts.toString(),
+    }, _newGameAction);
   }
 
   @override

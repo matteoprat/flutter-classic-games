@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:classic_games/data/coordinate_class.dart';
+import 'package:classic_games/data/game_result/minesweeper_game_result.dart';
 import 'package:classic_games/data/minefield_cell.dart';
 import 'package:classic_games/data/minesweeper_difficulty.dart';
 import 'package:classic_games/games/minesweeper_game/components/minesweeper_control_panel.dart';
 import 'package:classic_games/games/minesweeper_game/components/minesweeper_stats_panel.dart';
 import 'package:classic_games/games/minesweeper_game/components/minesweeper_tile.dart';
-import 'package:classic_games/templates/endgame_dialog.dart';
 import 'package:classic_games/templates/game_container.dart';
 import 'package:classic_games/utils/dialog_utils.dart';
 import 'package:classic_games/utils/minesweeper_utils.dart';
@@ -90,6 +90,7 @@ class _MinesweeperState extends State<MinesweeperGame> {
   }
 
   void _onTapTile(CoordinateClass coordinates) {
+    MinesweeperGameResult? gameResult;
     if (_firstMove) {
       List<List<MinefieldCell>> populatedMineField = minesweeperUtils
           .populateMineField(_minefield, _currentDifficulty, coordinates);
@@ -105,16 +106,7 @@ class _MinesweeperState extends State<MinesweeperGame> {
         _gameOver = true;
         _explodedMine = coordinates;
       });
-      dialogUtils.showEndGameDialog(
-        context,
-        EndGameDialog(
-          title: "You lose.",
-          message: "You accidentally touch a mine. Ouch!",
-          icon: Icons.sentiment_dissatisfied_rounded,
-          iconColor: Colors.blueGrey,
-          newGameAction: _newGameAction,
-        ),
-      );
+      gameResult = MinesweeperGameResult.lose;
     }
     if (!_gameOver) {
       setState(() {
@@ -130,18 +122,13 @@ class _MinesweeperState extends State<MinesweeperGame> {
         setState(() {
           _gameOver = true;
         });
-        dialogUtils.showEndGameDialog(
-          context,
-          EndGameDialog(
-            title: "Congratulations!",
-            message:
-                "You managed to win the game at ${_currentDifficulty.label} level.",
-            icon: Icons.emoji_events_rounded,
-            iconColor: Colors.amber,
-            newGameAction: _newGameAction,
-          ),
-        );
+        gameResult = MinesweeperGameResult.win;
       }
+    }
+    if (gameResult != null) {
+      dialogUtils.showEndGameDialog(context, gameResult, <String, String>{
+        "#difficulty#": _currentDifficulty.label.toUpperCase(),
+      }, _newGameAction);
     }
   }
 

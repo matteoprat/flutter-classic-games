@@ -1,4 +1,5 @@
 import 'package:classic_games/data/coordinate_class.dart';
+import 'package:classic_games/data/game_result/fifteen_game_result.dart';
 import 'package:classic_games/games/fifteen_game/components/fifteen_game_status_card.dart';
 import 'package:classic_games/games/fifteen_game/components/fifteen_game_tile.dart';
 import 'package:classic_games/templates/endgame_dialog.dart';
@@ -51,13 +52,9 @@ class _FifteenGameState extends State<FifteenGame> {
         if (_isSolved) {
           dialogUtils.showEndGameDialog(
             context,
-            EndGameDialog(
-              title: "Congratulations!",
-              message: "You beat the game in $_totalMoves moves.",
-              icon: Icons.emoji_events_rounded,
-              iconColor: Colors.amber,
-              newGameAction: _newGameAction,
-            ),
+            FifteenGameResult.win,
+            <String, String>{"#totalMoves#": _totalMoves.toString()},
+            _newGameAction,
           );
         }
       }

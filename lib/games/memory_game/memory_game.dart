@@ -1,10 +1,10 @@
 import 'package:classic_games/data/coordinate_class.dart';
+import 'package:classic_games/data/game_result/memory_game_result.dart';
 import 'package:classic_games/data/memory_difficulty.dart';
 import 'package:classic_games/data/memory_theme.dart';
 import 'package:classic_games/games/memory_game/components/memory_control_panel.dart';
 import 'package:classic_games/games/memory_game/components/memory_game_tile.dart';
 import 'package:classic_games/games/memory_game/components/memory_stats_header.dart';
-import 'package:classic_games/templates/endgame_dialog.dart';
 import 'package:classic_games/templates/game_container.dart';
 import 'package:classic_games/utils/dialog_utils.dart';
 import 'package:classic_games/utils/memory_utils.dart';
@@ -127,17 +127,11 @@ class _MemoryGameState extends State<MemoryGame> {
     });
 
     if (_matches == _currentDifficulty.pairsCount) {
-      dialogUtils.showEndGameDialog(
-        context,
-        EndGameDialog(
-          title: "Congratulations!",
-          message:
-              "You win the game of level ${_currentDifficulty.name} with $_guesses guesses",
-          icon: Icons.emoji_events_rounded,
-          iconColor: Colors.amber,
-          newGameAction: _newGameAction,
-        ),
-      );
+      dialogUtils
+          .showEndGameDialog(context, MemoryGameResult.win, <String, String>{
+            "#difficultyLevel#": _currentDifficulty.name.toUpperCase(),
+            "#guesses#": _guesses.toString(),
+          }, _newGameAction);
     }
   }
 

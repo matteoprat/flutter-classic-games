@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:classic_games/data/hanoi_tower_difficulty.dart';
+import 'package:classic_games/data/game_result/hanoi_tower_game_result.dart';
 import 'package:classic_games/data/hanoi_tower_move.dart';
 import 'package:classic_games/data/hanoi_tower_move_validation.dart';
 import 'package:classic_games/games/hanoi_tower_game/components/hanoi_tower_control_panel.dart';
 import 'package:classic_games/games/hanoi_tower_game/components/hanoi_tower_stack.dart';
 import 'package:classic_games/games/hanoi_tower_game/components/hanoi_tower_stats_panel.dart';
-import 'package:classic_games/templates/endgame_dialog.dart';
 import 'package:classic_games/templates/game_container.dart';
 import 'package:classic_games/utils/dialog_utils.dart';
 import 'package:classic_games/utils/hanoi_tower_utils.dart';
@@ -71,14 +71,12 @@ class _HanoiTowerGameState extends State<HanoiTowerGame> {
     if (_isGameOver) {
       dialogUtils.showEndGameDialog(
         context,
-        EndGameDialog(
-          title: "Congratulations!",
-          message:
-              "You solved the game in $_totalMoves.\n Perfect score is $_perfectScore.",
-          icon: Icons.emoji_events_rounded,
-          iconColor: Colors.amber,
-          newGameAction: _newGameAction,
-        ),
+        HanoiTowerGameResult.win,
+        <String, String>{
+          "#swaps#": _totalMoves.toString(),
+          "#perfectScore#": _perfectScore.toString(),
+        },
+        _newGameAction,
       );
     }
   }
@@ -98,7 +96,7 @@ class _HanoiTowerGameState extends State<HanoiTowerGame> {
   @override
   Widget build(BuildContext context) {
     return GameContainer(
-      title: "Hanoi Tower",
+      title: "Tower of Hanoi",
       startGame: () => _startGame(),
       body: SafeArea(
         child: Column(
