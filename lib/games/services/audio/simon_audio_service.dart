@@ -1,33 +1,23 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:classic_games/data/simon_command.dart';
-import 'package:sound_generator/sound_generator.dart';
-import 'package:sound_generator/waveTypes.dart';
 
 class SimonAudioService {
-  bool _isInitialized = false;
-  final double initFrequency = 440.0;
+  final AudioPlayer _player = AudioPlayer();
 
   Future<void> init() async {
-    await SoundGenerator.init(44100);
-    SoundGenerator.setWaveType(waveTypes.SINUSOIDAL);
-    SoundGenerator.setFrequency(initFrequency);
-    SoundGenerator.setVolume(0.5);
-    _isInitialized = true;
+    await _player.setReleaseMode(ReleaseMode.stop);
   }
 
-  void playNote(SimonCommand command) {
-    if (_isInitialized) {
-      SoundGenerator.setFrequency(command.frequency);
-      SoundGenerator.play();
-    }
+  void playNote(SimonCommand command) async {
+    await _player.stop();
+    await _player.play(AssetSource(command.soundAsset));
   }
 
-  void stopNote() {
-    if (_isInitialized) {
-      SoundGenerator.stop();
-    }
+  void stopNote() async {
+    await _player.stop();
   }
 
   void dispose() {
-    SoundGenerator.release();
+    _player.dispose();
   }
 }

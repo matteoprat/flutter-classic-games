@@ -126,10 +126,7 @@ class _SimonGameState extends State<SimonGame> {
     setState(() {
       _currentCommand = command;
     });
-    await Future<void>.delayed(
-      Duration(milliseconds: _isPlayerTurn ? 150 : 400),
-      () => {},
-    );
+    await Future<void>.delayed(Duration(milliseconds: 400), () => {});
     _audioService.stopNote();
   }
 

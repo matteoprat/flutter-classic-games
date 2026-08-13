@@ -29,6 +29,8 @@ Matteo Pratellesi
 
 # Version History
 * 1.2.0 - DATE: Aug 13 2026 
+  * added Game Icon (AI generated)
+  * added Splash Screen
   * added Simon Game
   * game result dialog box refactoring
 * 1.1.0 - DATE: Aug 10 2026 - Added Hanoi Tower
