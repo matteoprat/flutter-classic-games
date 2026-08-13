@@ -4,6 +4,7 @@ import 'package:classic_games/games/hanoi_tower_game/hanoi_tower_game.dart';
 import 'package:classic_games/games/mastermind_game/mastermind_game.dart';
 import 'package:classic_games/games/memory_game/memory_game.dart';
 import 'package:classic_games/games/minesweeper_game/minesweeper_game.dart';
+import 'package:classic_games/games/simon_game/simon_game.dart';
 import 'package:classic_games/games/tris_game/tris_game.dart';
 import 'package:classic_games/templates/game_card.dart';
 import 'package:flutter/material.dart';
@@ -69,22 +70,6 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             GameCard(
-              title: "Hanoi Tower",
-              subtitle: "Move discs from column A to column C",
-              icon: Icons.cabin_rounded,
-              color: Colors.lightBlue,
-              isAvailable: true,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HanoiTowerGame(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 12),
-            GameCard(
               title: "Mastermind",
               subtitle: "Guess the secret combination",
               icon: Icons.psychology_rounded,
@@ -129,6 +114,37 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
+            const SizedBox(height: 12),
+            GameCard(
+              title: "Simon",
+              subtitle: "Repeat the sequence",
+              icon: Icons.pie_chart_rounded,
+              color: Colors.red,
+              isAvailable: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SimonGame()),
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+            GameCard(
+              title: "Tower of Hanoi",
+              subtitle: "Move discs from column A to column C",
+              icon: Icons.cabin_rounded,
+              color: Colors.lightBlue,
+              isAvailable: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HanoiTowerGame(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 12),
             GameCard(
               title: "Tris (Tic-Tac-Toe)",
               subtitle: "Align 3 symbols",
